@@ -47,8 +47,6 @@ public:
 	bool isStackable();
 };
 
-#define EMPTY_ITEM 0
-
 struct Weapon : Item {
 	int damage = 0;
 	Stats stats = {0, 0, 0};

@@ -14,7 +14,7 @@ void Inventory::debug_print() {
 }
 
 void Inventory::debug_print_at(int i) {
-	std::cout << "slot[" + std::to_string(i) + "] contains " << slots[i].amount << " [" + slots[i].item.getName() + "] with ID=" << slots[i].item.getID() << std::endl;
+	std::cout << "slot[" + std::to_string(i) + "] contains " << slots[i].amount << " [" + slots[i].item.getName() + "] with ID=" << slots[i].item.getID() << ":" << std::endl;
 
 	ItemData itemData = slots[i].item.getData();
 
@@ -22,24 +22,22 @@ void Inventory::debug_print_at(int i) {
 	case ItemType::WEAPON :
 		Weapon* weapon;
 		weapon = static_cast<Weapon*>(itemData.data);
-		std::cout << "-+*ADDITIONAL ITEM DATA*+-" << std::endl;
 		std::cout << " -damage=" << weapon->damage << std::endl;
 		std::cout << " -additional strength=" << weapon->stats.STR << std::endl;
 		std::cout << " -additional dexterity=" << weapon->stats.DEX << std::endl;
 		std::cout << " -additional intelligence=" << weapon->stats.INT << std::endl;
-		std::cout << "-+*ADDITIONAL ITEM DATA*+-" << std::endl;
 	break;
 	case ItemType::ARMOR :
 		Armor* armor;
 		armor = static_cast<Armor*>(itemData.data);
-		std::cout << "-+*ADDITIONAL ITEM DATA*+-" << std::endl;
 		std::cout << " -defense=" << armor->defense << std::endl;
 		std::cout << " -additional strength=" << armor->stats.STR << std::endl;
 		std::cout << " -additional dexterity=" << armor->stats.DEX << std::endl;
 		std::cout << " -additional intelligence=" << armor->stats.INT << std::endl;
-		std::cout << "-+*ADDITIONAL ITEM DATA*+-" << std::endl;
 	break;
 	}
+
+	std::cout << "--------------------------------------------------" << std::endl;
 }
 
 bool Inventory::hasCapacity() {
@@ -73,7 +71,7 @@ bool Inventory::addItem(Item item, unsigned int amount) {
 
 	if (!item.isStackable()) {
 		while (remainder > 0) {
-			index = getItemIndex(EMPTY_ITEM); //get an empty slot
+			index = getItemIndex(0); //get an empty slot
 
 			if (index == -1) { return false; }
 
@@ -98,7 +96,7 @@ bool Inventory::addItem(Item item, unsigned int amount) {
 	}
 	
 	if (hasCapacity()) {
-		index = getItemIndex(EMPTY_ITEM); //get an empty slot
+		index = getItemIndex(0); //get an empty slot
 
 		if (index == -1) { return false; }
 
